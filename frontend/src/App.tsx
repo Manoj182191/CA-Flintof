@@ -37,6 +37,31 @@ import PayslipCenterPage from './pages/PayslipCenterPage';
 import InventoryIntelligencePage from './pages/InventoryIntelligencePage';
 import StockAdjustmentCenterPage from './pages/StockAdjustmentCenterPage';
 
+// Documents & Client Portal
+import DocumentVaultPage from './pages/DocumentVaultPage';
+import ClientCommandCenterPage from './pages/ClientCommandCenterPage';
+
+// Phase 8: 100% Completion Additions
+import CAPracticeManagementPage from './pages/CAPracticeManagementPage';
+import RoleBasedAccessControlPage from './pages/RoleBasedAccessControlPage';
+import ROCAndMCACenterPage from './pages/ROCAndMCACenterPage';
+import AuditAndCompliancePage from './pages/AuditAndCompliancePage';
+import GSTComplianceCenterPage from './pages/GSTComplianceCenterPage';
+import TDSComplianceCenterPage from './pages/TDSComplianceCenterPage';
+import AIAssistantCenterPage from './pages/AIAssistantCenterPage';
+import CFODashboardPage from './pages/CFODashboardPage';
+import ReportsIntelligencePage from './pages/ReportsIntelligencePage';
+import CompanyIntelligenceDashboardPage from './pages/CompanyIntelligenceDashboardPage';
+import IntegrationCenterPage from './pages/IntegrationCenterPage';
+import TaskManagementHubPage from './pages/TaskManagementHubPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
+import ChartOfAccountsPage from './pages/ChartOfAccountsPage';
+import FinancialStatementsHubPage from './pages/FinancialStatementsHubPage';
+import BankReconciliationCenterPage from './pages/BankReconciliationCenterPage';
+import SalesInvoiceCenterPage from './pages/SalesInvoiceCenterPage';
+import PortalIntegrationHubPage from './pages/PortalIntegrationHubPage';
+
 // Components
 import Navbar from './components/Navbar';
 
@@ -268,6 +293,163 @@ const App: React.FC = () => {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/documents"
+            element={
+              <ProtectedRoute>
+                <DocumentVaultPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/client-portal"
+            element={
+              <ProtectedRoute>
+                <ClientCommandCenterPage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Phase 8: 100% Completion Additions */}
+          <Route
+            path="/admin/practice"
+            element={
+              <ProtectedRoute>
+                <CAPracticeManagementPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/rbac"
+            element={
+              <ProtectedRoute>
+                <RoleBasedAccessControlPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/compliance/roc-mca"
+            element={
+              <ProtectedRoute>
+                <ROCAndMCACenterPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/compliance/audit"
+            element={
+              <ProtectedRoute>
+                <AuditAndCompliancePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/compliance/gst"
+            element={
+              <ProtectedRoute>
+                <GSTComplianceCenterPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/compliance/tds"
+            element={
+              <ProtectedRoute>
+                <TDSComplianceCenterPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/ai/assistant"
+            element={
+              <ProtectedRoute>
+                <AIAssistantCenterPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/cfo"
+            element={
+              <ProtectedRoute>
+                <CFODashboardPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/reports/intelligence"
+            element={
+              <ProtectedRoute>
+                <ReportsIntelligencePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/company/intelligence"
+            element={
+              <ProtectedRoute>
+                <CompanyIntelligenceDashboardPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/integrations"
+            element={
+              <ProtectedRoute>
+                <IntegrationCenterPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tasks"
+            element={
+              <ProtectedRoute>
+                <TaskManagementHubPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route
+            path="/accounting/coa"
+            element={
+              <ProtectedRoute>
+                <ChartOfAccountsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/accounting/statements"
+            element={
+              <ProtectedRoute>
+                <FinancialStatementsHubPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/accounting/reconciliation"
+            element={
+              <ProtectedRoute>
+                <BankReconciliationCenterPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/invoicing"
+            element={
+              <ProtectedRoute>
+                <SalesInvoiceCenterPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/client-portal/integrations"
+            element={
+              <ProtectedRoute>
+                <PortalIntegrationHubPage />
+              </ProtectedRoute>
+            }
+          />
+
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>

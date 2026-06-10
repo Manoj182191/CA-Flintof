@@ -90,18 +90,20 @@ export default ${componentName};
     return tsx;
 }
 
-const files = [
-    { file: "InventoryIntelligencePage.html", comp: "InventoryIntelligencePage" },
-    { file: "StockAdjustmentCenterPage.html", comp: "StockAdjustmentCenterPage" }
-];
+const args = process.argv.slice(2);
+if (args.length < 2) {
+    console.error("Usage: node convert.js <inputFile> <componentName>");
+    process.exit(1);
+}
 
-files.forEach(({ file, comp }) => {
-    try {
-        const html = fs.readFileSync(file, 'utf8');
-        const tsx = htmlToJsx(html, comp);
-        fs.writeFileSync(comp + ".tsx", tsx, 'utf8');
-        console.log("Successfully converted " + comp);
-    } catch (e) {
-        console.error("Error converting " + comp + ":", e);
-    }
-});
+const file = args[0];
+const comp = args[1];
+
+try {
+    const html = fs.readFileSync(file, 'utf8');
+    const tsx = htmlToJsx(html, comp);
+    fs.writeFileSync(comp + ".tsx", tsx, 'utf8');
+    console.log("Successfully converted " + comp);
+} catch (e) {
+    console.error("Error converting " + comp + ":", e);
+}

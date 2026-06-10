@@ -8,11 +8,6 @@ const InventoryIntelligencePage: React.FC = () => {
     const { activeCompanyId } = useAuth();
     const [summary, setSummary] = useState<InventorySummary | null>(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [aiVisible, setAiVisible] = useState(false);
-
-    const toggleAI = () => {
-        setAiVisible(!aiVisible);
-    };
 
     useEffect(() => {
         if (activeCompanyId) {
@@ -111,11 +106,11 @@ const InventoryIntelligencePage: React.FC = () => {
 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
 <div>
 <p className="font-label-sm text-on-surface-variant">Total Value</p>
-<p className="font-data-mono text-headline-md text-primary">${summary?.total_value?.toLocaleString('en-US') || '0.00'}</p>
+<p className="font-data-mono text-headline-md text-primary">$4.2M</p>
 </div>
 <div>
 <p className="font-label-sm text-on-surface-variant">Active SKUs</p>
-<p className="font-data-mono text-headline-md text-primary">{summary?.total_items?.toLocaleString('en-US') || '0'}</p>
+<p className="font-data-mono text-headline-md text-primary">12,840</p>
 </div>
 <div>
 <p className="font-label-sm text-on-surface-variant">Turnover Rate</p>
@@ -350,7 +345,7 @@ const InventoryIntelligencePage: React.FC = () => {
 </a>
 </nav>
 {/*  AI Floating Insight Panel (Contextual)  */}
-<div className={`fixed right-6 bottom-24 w-80 glass-card rounded-2xl p-md shadow-2xl z-40 transform transition-transform duration-500 ease-out hidden lg:block border-secondary/30 ${aiVisible ? 'translate-x-0' : 'translate-x-[110%]'}`} id="ai-panel">
+<div className="fixed right-6 bottom-24 w-80 glass-card rounded-2xl p-md shadow-2xl z-40 transform translate-x-[110%] transition-transform duration-500 ease-out hidden lg:block border-secondary/30" id="ai-panel">
 <div className="flex items-center gap-2 mb-4">
 <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-white">
 <span className="material-symbols-outlined text-[18px]">smart_toy</span>
@@ -359,7 +354,7 @@ const InventoryIntelligencePage: React.FC = () => {
 <p className="font-bold text-primary text-sm">FinPilot AI</p>
 <p className="text-[10px] text-on-surface-variant">Insight Generator</p>
 </div>
-<button className="ml-auto text-on-surface-variant hover:text-primary" onClick={toggleAI}>
+<button className="ml-auto text-on-surface-variant hover:text-primary" onClick={() => {}}>
 <span className="material-symbols-outlined">close</span>
 </button>
 </div>
@@ -375,7 +370,7 @@ const InventoryIntelligencePage: React.FC = () => {
 </div>
 </div>
 {/*  Activation Button for AI Panel (Persistent)  */}
-<button className="fixed right-6 bottom-24 md:bottom-8 w-14 h-14 bg-primary text-white rounded-full flex items-center justify-center shadow-2xl z-40 hover:scale-110 transition-transform active:scale-95 group" onClick={toggleAI}>
+<button className="fixed right-6 bottom-24 md:bottom-8 w-14 h-14 bg-primary text-white rounded-full flex items-center justify-center shadow-2xl z-40 hover:scale-110 transition-transform active:scale-95 group" onClick={() => {}}>
 <span className="material-symbols-outlined text-[28px] group-hover:rotate-12 transition-transform">smart_toy</span>
 </button>
 
