@@ -13,11 +13,16 @@ class APIClient {
       },
     });
 
-    // Add token to request headers
+    // Add token and company ID to request headers
     this.client.interceptors.request.use((config) => {
       const token = localStorage.getItem('access_token');
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
+      }
+      
+      const companyId = localStorage.getItem('active_company_id');
+      if (companyId) {
+        config.headers['X-Company-ID'] = companyId;
       }
       return config;
     });
@@ -35,10 +40,11 @@ class APIClient {
     );
   }
 
-  get = (url: string) => this.client.get(url);
-  post = (url: string, data?: any) => this.client.post(url, data);
-  put = (url: string, data?: any) => this.client.put(url, data);
-  delete = (url: string) => this.client.delete(url);
+  get<T = any>(url: string, config?: any) { return this.client.get<T>(url, config); }
+  post<T = any>(url: string, data?: any, config?: any) { return this.client.post<T>(url, data, config); }
+  put<T = any>(url: string, data?: any, config?: any) { return this.client.put<T>(url, data, config); }
+  patch<T = any>(url: string, data?: any, config?: any) { return this.client.patch<T>(url, data, config); }
+  delete<T = any>(url: string, config?: any) { return this.client.delete<T>(url, config); }
 }
 
 export const apiClient = new APIClient();

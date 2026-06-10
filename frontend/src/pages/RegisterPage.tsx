@@ -1,28 +1,35 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authService } from '../services/authService';
-import { useAuth } from '../context/AuthContext';
 
-const LoginPage: React.FC = () => {
+const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
+  const [fullName, setFullName] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const { login } = useAuth();
-
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
     try {
-      const response = await authService.login({ email, password });
-      login(response.access_token);
-      navigate('/dashboard');
+      await authService.register({ email, password, username, full_name: fullName });
+      // Redirect to login page after successful registration
+      navigate('/login');
     } catch (err: any) {
-      setError(err.response?.data?.detail || 'Login failed');
+      if (err.response?.data?.detail) {
+          if (Array.isArray(err.response.data.detail)) {
+              setError(err.response.data.detail[0].msg);
+          } else {
+              setError(err.response.data.detail);
+          }
+      } else {
+          setError('Registration failed');
+      }
     } finally {
       setLoading(false);
     }
@@ -32,8 +39,8 @@ const LoginPage: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-2xl p-8 w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800">CA ERP Platform</h1>
-          <p className="text-gray-600 mt-2">Advanced Accounting Software</p>
+          <h1 className="text-3xl font-bold text-gray-800">Create Account</h1>
+          <p className="text-gray-600 mt-2">Join the CA ERP Platform</p>
         </div>
 
         {error && (
@@ -42,7 +49,34 @@ const LoginPage: React.FC = () => {
           </div>
         )}
 
-        <form onSubmit={handleLogin} className="space-y-6">
+        <form onSubmit={handleRegister} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Full Name
+            </label>
+            <input
+              type="text"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="John Doe"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Username
+            </label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="johndoe"
+              required
+            />
+          </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Email
@@ -74,20 +108,20 @@ const LoginPage: React.FC = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 transition"
+            className="w-full bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 transition mt-6"
           >
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? 'Registering...' : 'Register'}
           </button>
         </form>
 
         <p className="text-center text-sm text-gray-600 mt-6">
-          Don't have an account?{' '}
+          Already have an account?{' '}
           <button 
             type="button"
-            onClick={() => navigate('/register')}
+            onClick={() => navigate('/login')}
             className="text-blue-600 hover:underline"
           >
-            Register here
+            Login here
           </button>
         </p>
       </div>
@@ -95,4 +129,4 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

@@ -198,6 +198,38 @@ class InvoiceResponse(InvoiceBase):
 
 # ============== INVENTORY SCHEMAS ==============
 
+class WarehouseBase(BaseModel):
+    name: str = Field(..., min_length=1)
+    code: Optional[str] = None
+    location: Optional[str] = None
+    manager_id: Optional[int] = None
+
+class WarehouseCreate(WarehouseBase):
+    pass
+
+class WarehouseResponse(WarehouseBase):
+    id: int
+    company_id: int
+    
+    class Config:
+        from_attributes = True
+
+class StockCategoryBase(BaseModel):
+    name: str = Field(..., min_length=1)
+    parent_id: Optional[int] = None
+    description: Optional[str] = None
+    is_active: bool = True
+
+class StockCategoryCreate(StockCategoryBase):
+    pass
+
+class StockCategoryResponse(StockCategoryBase):
+    id: int
+    company_id: int
+    
+    class Config:
+        from_attributes = True
+
 class StockItemBase(BaseModel):
     item_code: str = Field(..., min_length=1)
     item_name: str = Field(..., min_length=1)
@@ -207,14 +239,123 @@ class StockItemBase(BaseModel):
     selling_price: Optional[float] = Field(None, ge=0)
     hsn_code: Optional[str] = None
     gst_rate: float = Field(default=0, ge=0)
+    reorder_level: float = Field(default=0, ge=0)
 
 class StockItemCreate(StockItemBase):
-    company_id: int
+    category_id: Optional[int] = None
 
 class StockItemResponse(StockItemBase):
     id: int
     company_id: int
+    category_id: Optional[int] = None
     quantity_on_hand: float
+    
+    class Config:
+        from_attributes = True
+
+class StockMovementBase(BaseModel):
+    stock_item_id: int
+    warehouse_id: Optional[int] = None
+    movement_type: str
+    quantity: float
+    unit_price: float = 0
+    reference_type: Optional[str] = None
+    reference_id: Optional[int] = None
+    movement_date: date
+    remarks: Optional[str] = None
+
+class StockMovementCreate(StockMovementBase):
+    pass
+
+class StockMovementResponse(StockMovementBase):
+    id: int
+    company_id: int
+    total_value: float
+    created_at: datetime
+    
+    class Config:
+        from_attributes = True
+
+class OrderItemBase(BaseModel):
+    stock_item_id: int
+    quantity: float = Field(..., gt=0)
+    unit_price: float = Field(..., ge=0)
+    gst_rate: float = Field(default=0, ge=0)
+
+class PurchaseOrderCreate(BaseModel):
+    vendor_id: int
+    po_number: str
+    po_date: date
+    expected_delivery: Optional[date] = None
+    warehouse_id: Optional[int] = None
+    notes: Optional[str] = None
+    items: List[OrderItemBase]
+
+class PurchaseOrderResponse(BaseModel):
+    id: int
+    company_id: int
+    vendor_id: int
+    po_number: str
+    po_date: date
+    status: str
+    subtotal: float
+    tax_amount: float
+    total_amount: float
+    created_at: datetime
+    
+    class Config:
+        from_attributes = True
+
+class SalesOrderCreate(BaseModel):
+    customer_id: int
+    so_number: str
+    so_date: date
+    expected_delivery: Optional[date] = None
+    warehouse_id: Optional[int] = None
+    notes: Optional[str] = None
+    items: List[OrderItemBase]
+
+class SalesOrderResponse(BaseModel):
+    id: int
+    company_id: int
+    customer_id: int
+    so_number: str
+    so_date: date
+    status: str
+    subtotal: float
+    tax_amount: float
+    total_amount: float
+    created_at: datetime
+    
+    class Config:
+        from_attributes = True
+
+class GRNItemBase(BaseModel):
+    stock_item_id: int
+    quantity: float = Field(..., gt=0)
+    unit_price: float = Field(..., ge=0)
+    gst_rate: float = Field(default=0, ge=0)
+    batch_number: Optional[str] = None
+    expiry_date: Optional[date] = None
+
+class GRNCreate(BaseModel):
+    grn_number: str
+    vendor_id: int
+    purchase_order_id: Optional[int] = None
+    warehouse_id: Optional[int] = None
+    grn_date: date
+    invoice_number: Optional[str] = None
+    invoice_date: Optional[date] = None
+    notes: Optional[str] = None
+    items: List[GRNItemBase]
+
+class GRNResponse(BaseModel):
+    id: int
+    company_id: int
+    grn_number: str
+    status: str
+    total_amount: float
+    created_at: datetime
     
     class Config:
         from_attributes = True

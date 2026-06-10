@@ -60,3 +60,57 @@
     radial-gradient(circle at 15% 50%, rgba(0, 243, 255, 0.08), transparent 25%),
     radial-gradient(circle at 85% 30%, rgba(176, 38, 255, 0.08), transparent 25%);
 }
+
+/* Stitch UI Overrides and Custom Components */
+.stitch-app {
+  @apply bg-surface text-on-surface font-body-md;
+  min-height: max(884px, 100dvh);
+}
+
+.stitch-glass-panel {
+  @apply bg-surface-container-lowest/70 backdrop-blur-xl border border-outline-variant/30;
+}
+
+.tree-line::before {
+  content: '';
+  position: absolute;
+  left: -18px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: theme('colors.outline-variant');
+}
+.tree-item:last-child::before {
+  height: 20px;
+}
+.tree-item::after {
+  content: '';
+  position: absolute;
+  left: -18px;
+  top: 20px;
+  width: 12px;
+  height: 1px;
+  background: theme('colors.outline-variant');
+}
+
+.ai-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(75, 65, 225, 0.05), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite;
+}
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.ai-glow {
+  box-shadow: 0 0 15px rgba(79, 70, 229, 0.1);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}

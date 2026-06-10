@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Employee Directory | FinPilot AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline": "#75777f",
+                    "on-tertiary-container": "#a27bff",
+                    "on-primary-fixed": "#081b3a",
+                    "surface-container-low": "#eff4ff",
+                    "primary-fixed-dim": "#b6c6ef",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-fixed-variant": "#3323cc",
+                    "secondary-fixed-dim": "#c3c0ff",
+                    "primary-fixed": "#d8e2ff",
+                    "on-primary-container": "#8293b8",
+                    "secondary-container": "#645efb",
+                    "on-background": "#0b1c30",
+                    "surface-container-high": "#dce9ff",
+                    "outline-variant": "#c5c6cf",
+                    "surface-container-highest": "#d3e4fe",
+                    "inverse-surface": "#213145",
+                    "surface-container": "#e5eeff",
+                    "on-surface": "#0b1c30",
+                    "error-container": "#ffdad6",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-bright": "#f8f9ff",
+                    "secondary": "#4b41e1",
+                    "on-primary-fixed-variant": "#364768",
+                    "on-primary": "#ffffff",
+                    "tertiary-container": "#360084",
+                    "on-tertiary-fixed": "#23005c",
+                    "tertiary-fixed": "#e9ddff",
+                    "secondary-fixed": "#e2dfff",
+                    "surface-tint": "#4e5e81",
+                    "primary": "#031635",
+                    "on-tertiary-fixed-variant": "#5516be",
+                    "on-secondary-container": "#fffbff",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed": "#0f0069",
+                    "background": "#f8f9ff",
+                    "surface-variant": "#d3e4fe",
+                    "tertiary-fixed-dim": "#d0bcff",
+                    "tertiary": "#1e0050",
+                    "inverse-primary": "#b6c6ef",
+                    "surface": "#f8f9ff",
+                    "on-error": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "error": "#ba1a1a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "lg": "24px",
+                    "sm": "8px",
+                    "md": "16px",
+                    "container-max": "1440px",
+                    "xs": "4px",
+                    "xl": "40px",
+                    "gutter": "20px",
+                    "base": "4px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Hanken Grotesk"],
+                    "body-lg": ["Inter"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "body-md": ["Inter"],
+                    "data-mono": ["Geist"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "label-sm": ["Geist"],
+                    "display-lg": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "data-mono": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid #E2E8F0;
+        }
+        .ai-glow {
+            box-shadow: 0 0 15px rgba(79, 70, 229, 0.15);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-pill {
+            background: #645efb;
+            color: #fffbff;
+        }
+        @media (max-width: 768px) {
+            .desktop-only { display: none; }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md selection:bg-secondary-container selection:text-on-secondary-container overflow-x-hidden">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 flex justify-between items-center px-md w-full h-16 bg-surface-bright dark:bg-surface-dim border-b border-outline-variant dark:border-outline flat no shadows">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary cursor-pointer">menu</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">FinPilot AI</h1>
+</div>
+<div class="flex items-center gap-md">
+<div class="hidden md:flex gap-md">
+<button class="font-label-sm text-label-sm text-on-surface-variant hover:bg-surface-container-high transition-colors px-3 py-1 rounded-lg">Directory</button>
+<button class="font-label-sm text-label-sm text-secondary dark:text-secondary-fixed font-bold px-3 py-1 rounded-lg">Payroll</button>
+<button class="font-label-sm text-label-sm text-on-surface-variant hover:bg-surface-container-high transition-colors px-3 py-1 rounded-lg">Compliance</button>
+</div>
+<img alt="User Profile" class="w-8 h-8 rounded-full border border-outline-variant active:scale-95 duration-150 cursor-pointer" data-alt="A professional high-resolution avatar of a corporate executive with minimalist features. The lighting is soft and directional, typical of a high-end studio portrait. The color scheme is neutral with subtle blue tones to match a premium financial software interface. The overall mood is sophisticated and reliable." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBo1sSXFvv1yC3AC7vkeVzGH_tq8OtRe-PUYHQ_WTJC9QtL1UVuF8KhAr1jLsylkou9OOzOYdPPkp8v-PMnXsgy66SE5SmpQqcEbq-_6nBc_ga1UjUQVQFoPuZQb0tonDAkLwVeDx2ONp28RSNgcgimpUSx15v-wspBSzqVV-tX0gmum8R3gImjPmY4DjWKJrDu80lipAUj6PsoxLrcCt27HFuu6sFzRtwd27rsskWUYRdAX5jraW2TZz1s1xGhZDqRrM36S9nsae8"/>
+</div>
+</header>
+<div class="flex min-h-[calc(100vh-64px)]">
+<!-- Sidebar Drawer (Desktop) -->
+<aside class="hidden md:flex flex-col gap-base p-md fixed left-0 top-16 h-full w-[280px] bg-surface-container dark:bg-surface-dim border-r border-outline-variant shadow-xl z-40">
+<nav class="flex flex-col gap-xs">
+<div class="flex items-center gap-md p-md mb-md">
+<img class="w-10 h-10 rounded-xl" data-alt="A clean geometric logo for a financial AI company. The design uses deep blues and vibrant indigos with sharp, modern lines. The background is a soft, light-mode grey. The style is reminiscent of high-performance fintech brands like Stripe or Mercury." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCO--CywoMBjDwIgYVsnNeDmMGVpqhN29itXHuybgCpJeO7NJQv4ZQfNsyO8hodOK3gj3qa2B4VMAKb-yqOQNdGNAM6yrL0uAaFHsy05FqaQ9bUxsf2AN2Ab3qbQDw6iLGNAXrv7RlUjSWCSRxFakkJpJ63CuHkXAPutrrWY1UNr4dr5V0gfdTRdTJwbN-VKPyX75S5dlZqTqh-GB0stUNM4_Scg3hZsbBZhsxiFqAEDLahhzNPhUyaryEzBivk3qRdzhvurWIAbqw"/>
+<div>
+<p class="font-headline-md text-body-md font-bold text-primary">FinPilot AI Admin</p>
+<p class="text-[10px] uppercase tracking-wider text-outline">Enterprise Tier</p>
+</div>
+</div>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high hover:translate-x-1 transition-transform duration-200 cursor-pointer rounded-lg" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high hover:translate-x-1 transition-transform duration-200 cursor-pointer rounded-lg" href="#">
+<span class="material-symbols-outlined">business</span>
+<span class="font-body-md text-body-md">Companies</span>
+</a>
+<a class="flex items-center gap-md p-md bg-secondary-container text-on-secondary-container font-semibold rounded-lg hover:translate-x-1 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-body-md text-body-md">Payroll</span>
+</a>
+<div class="px-md py-sm">
+<p class="text-[10px] font-bold text-outline uppercase tracking-widest">Employee Ops</p>
+</div>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high hover:translate-x-1 transition-transform duration-200 cursor-pointer rounded-lg" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body-md text-body-md">Directory</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high hover:translate-x-1 transition-transform duration-200 cursor-pointer rounded-lg" href="#">
+<span class="material-symbols-outlined">gavel</span>
+<span class="font-body-md text-body-md">Compliance</span>
+</a>
+<a class="flex items-center gap-md p-md text-on-surface-variant hover:bg-surface-container-high hover:translate-x-1 transition-transform duration-200 cursor-pointer rounded-lg" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="font-body-md text-body-md">Reports</span>
+</a>
+</nav>
+<div class="mt-auto p-md border-t border-outline-variant">
+<div class="flex items-center justify-between text-outline text-[11px]">
+<span>v2.4.0</span>
+<span class="material-symbols-outlined text-[16px]">settings_applications</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-[280px] p-md md:p-lg lg:p-xl space-y-lg pb-24">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary">Employee Directory</h2>
+<p class="text-on-surface-variant font-body-md">Manage your workforce, roles, and payroll status in one centralized cockpit.</p>
+</div>
+<div class="flex gap-sm">
+<button class="flex items-center gap-sm px-md py-2 border border-outline rounded-lg font-label-sm text-label-sm hover:bg-surface-container-low transition-all active:scale-95">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                        Export List
+                    </button>
+<button class="flex items-center gap-sm px-md py-2 bg-primary text-on-primary rounded-lg font-label-sm text-label-sm hover:opacity-90 transition-all active:scale-95 shadow-md">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+                        Add Employee
+                    </button>
+</div>
+</div>
+<!-- AI Insight Banner -->
+<div class="glass-panel ai-glow rounded-xl p-md flex items-center gap-md border-l-4 border-l-secondary-container">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div>
+<h4 class="font-label-sm text-label-sm text-secondary font-bold">FinPilot AI Insight</h4>
+<p class="text-on-surface-variant text-[13px]">Found 3 employees with pending tax document approvals. Action required by EOD Friday.</p>
+</div>
+<button class="ml-auto text-secondary text-label-sm font-bold hover:underline">Review Now</button>
+</div>
+<!-- Controls Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-md">
+<!-- Search -->
+<div class="lg:col-span-5 relative">
+<span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-xl pr-md py-3 bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-secondary-container text-body-md" placeholder="Search by name, role, or ID..." type="text"/>
+</div>
+<!-- Filters -->
+<div class="lg:col-span-7 flex flex-wrap gap-sm items-center">
+<select class="bg-surface-container-low border-none rounded-xl py-3 px-md text-body-md focus:ring-2 focus:ring-secondary-container cursor-pointer">
+<option>All Departments</option>
+<option>Engineering</option>
+<option>Product</option>
+<option>Design</option>
+<option>Finance</option>
+</select>
+<select class="bg-surface-container-low border-none rounded-xl py-3 px-md text-body-md focus:ring-2 focus:ring-secondary-container cursor-pointer">
+<option>Active Status</option>
+<option>Onboarding</option>
+<option>On Leave</option>
+<option>Terminated</option>
+</select>
+<button class="bg-surface-container-low p-3 rounded-xl hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">filter_list</span>
+</button>
+<div class="flex bg-surface-container-low rounded-xl p-1 ml-auto">
+<button class="p-2 bg-white shadow-sm rounded-lg text-primary">
+<span class="material-symbols-outlined">list</span>
+</button>
+<button class="p-2 text-outline hover:text-primary">
+<span class="material-symbols-outlined">grid_view</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Directory List (Data Grid Style) -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low border-b border-outline-variant sticky top-0">
+<tr>
+<th class="px-lg py-md font-label-sm text-label-sm text-outline uppercase tracking-wider">Employee</th>
+<th class="px-lg py-md font-label-sm text-label-sm text-outline uppercase tracking-wider">ID &amp; Dept</th>
+<th class="px-lg py-md font-label-sm text-label-sm text-outline uppercase tracking-wider">Payroll Status</th>
+<th class="px-lg py-md font-label-sm text-label-sm text-outline uppercase tracking-wider">Role</th>
+<th class="px-lg py-md font-label-sm text-label-sm text-outline uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<img alt="Sarah Miller" class="w-10 h-10 rounded-full bg-surface-variant" data-alt="A portrait of a woman with glasses, styled in a minimalist digital illustration format. The color palette is composed of soft blues, crisp whites, and gentle grays. The background is a subtle gradient that suggests a modern, professional office environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHtwpN4_LoO_-ybyH79wKLWt4pOs1RcEK1DhhjU4lISi2MXGvEDMwH6ci8C0e4RK00FAV1a8QyWI34e_30mZ-l3VBIYzfR8a01-16uDM_gwd-giOllkl_baunQIPis8fwfsMyewIhia1b3KCT-gpJFr8scuzJqyC2LRozKLRFyYwIdZO_GU5Q0sZo2STXIQPOWQdWN5zyFt52_8n4-izanj_i9go98lxBZU8i2_4vlookRjdrlVAXTn7nP758i5qDCnXa1gkx0SrM"/>
+<div>
+<p class="font-body-md font-semibold text-on-surface">Sarah Miller</p>
+<p class="text-[12px] text-outline">sarah.m@finpilot.ai</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md">
+<p class="font-data-mono text-data-mono text-primary">EMP-0921</p>
+<p class="text-[12px] text-on-surface-variant">Engineering</p>
+</td>
+<td class="px-lg py-md">
+<span class="px-3 py-1 bg-emerald-100 text-emerald-700 text-[11px] font-bold rounded-full uppercase tracking-tighter">Verified</span>
+</td>
+<td class="px-lg py-md text-on-surface-variant font-body-md">Senior Frontend Lead</td>
+<td class="px-lg py-md text-right">
+<button class="text-outline group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center font-bold text-primary">JD</div>
+<div>
+<p class="font-body-md font-semibold text-on-surface">Jameson Dory</p>
+<p class="text-[12px] text-outline">j.dory@finpilot.ai</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md">
+<p class="font-data-mono text-data-mono text-primary">EMP-1104</p>
+<p class="text-[12px] text-on-surface-variant">Finance</p>
+</td>
+<td class="px-lg py-md">
+<span class="px-3 py-1 bg-amber-100 text-amber-700 text-[11px] font-bold rounded-full uppercase tracking-tighter">Pending Docs</span>
+</td>
+<td class="px-lg py-md text-on-surface-variant font-body-md">Financial Analyst</td>
+<td class="px-lg py-md text-right">
+<button class="text-outline group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<img alt="Marcus Chen" class="w-10 h-10 rounded-full bg-surface-variant" data-alt="A portrait of a male executive in a clean minimalist style. The illustration uses a high-contrast palette of deep navy and bright white with subtle indigo accents. The character has a friendly yet professional expression, fitting for an enterprise software user profile." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDc3uUgW1GNuP2s6zanfLfS6WPfv0xy6T35UB50qEfLiMWxC2SYtVSwF91egNTNlKU2Qikw_P15gwzY3H_DL1UOJyr-2NZ71twa1bpjk88HCAIpKzKnEZPfI6RDL7h3R7F3atL8TmackpOoUvuL7Rd6FPEMKLglDRPeRGUdzzNtFudtjh1lnMAh2i0Dvq_VOYrQK4xEhDG-GiQ9f2GaMHS5yOE8OMAvKEdgW_il3YE_K9v5_q7jNh-zOXnv9pxyLrWKZUMQbinPlmg"/>
+<div>
+<p class="font-body-md font-semibold text-on-surface">Marcus Chen</p>
+<p class="text-[12px] text-outline">m.chen@finpilot.ai</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md">
+<p class="font-data-mono text-data-mono text-primary">EMP-0842</p>
+<p class="text-[12px] text-on-surface-variant">Product</p>
+</td>
+<td class="px-lg py-md">
+<span class="px-3 py-1 bg-emerald-100 text-emerald-700 text-[11px] font-bold rounded-full uppercase tracking-tighter">Verified</span>
+</td>
+<td class="px-lg py-md text-on-surface-variant font-body-md">Product Manager</td>
+<td class="px-lg py-md text-right">
+<button class="text-outline group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors cursor-pointer group">
+<td class="px-lg py-md">
+<div class="flex items-center gap-md">
+<img alt="Elena Rodriguez" class="w-10 h-10 rounded-full bg-surface-variant" data-alt="A minimalist professional avatar of a female manager. The style is sleek and modern, utilizing a color palette of indigo, soft gray, and bright white. The background is a clean, slightly blurred workspace, emphasizing a high-performance corporate atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAParv8QmHq84FkG85Id9lS7GPGbgTfM_EuyMXJlmalnUSCyfWFBy-DKC5UnpQR-vmQBOkylKi-_HUfp7p5QUn2lhgQ5NjVUV2Y1FXGb10qQnMJu1s7P-mN3kY7bmCnwPMB42lTwWgej0TDs8msTbx29-faXKLCijjXNEo-aiD8ZESEUXx4n_V7aS5dd_zkJiRKWsi5CuGJ3Kw8GXFICz0oDdNXS3M3bcbAnfUvYEjQJte5c602wp8QNca1FQtUYvEaGviGb1TyII4"/>
+<div>
+<p class="font-body-md font-semibold text-on-surface">Elena Rodriguez</p>
+<p class="text-[12px] text-outline">e.rodriguez@finpilot.ai</p>
+</div>
+</div>
+</td>
+<td class="px-lg py-md">
+<p class="font-data-mono text-data-mono text-primary">EMP-1239</p>
+<p class="text-[12px] text-on-surface-variant">Design</p>
+</td>
+<td class="px-lg py-md">
+<span class="px-3 py-1 bg-blue-100 text-blue-700 text-[11px] font-bold rounded-full uppercase tracking-tighter">Onboarding</span>
+</td>
+<td class="px-lg py-md text-on-surface-variant font-body-md">UX Researcher</td>
+<td class="px-lg py-md text-right">
+<button class="text-outline group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination -->
+<div class="flex items-center justify-between px-lg py-md bg-surface-container-low">
+<p class="text-on-surface-variant text-[13px]">Showing 1-10 of 142 employees</p>
+<div class="flex gap-sm">
+<button class="px-3 py-1 border border-outline-variant rounded-lg hover:bg-white transition-colors disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="px-4 py-1 bg-primary text-on-primary rounded-lg font-label-sm">1</button>
+<button class="px-4 py-1 hover:bg-white rounded-lg font-label-sm">2</button>
+<button class="px-4 py-1 hover:bg-white rounded-lg font-label-sm">3</button>
+<button class="px-3 py-1 border border-outline-variant rounded-lg hover:bg-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Bottom Nav (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 flex justify-around items-center px-sm pb-2 pt-2 bg-surface-container-lowest dark:bg-primary-container shadow-[0_-2px_10px_rgba(0,0,0,0.05)] rounded-t-xl">
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-secondary transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-label-sm text-label-sm">HR</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-secondary transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">verified</span>
+<span class="font-label-sm text-label-sm">TDS</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-secondary transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-label-sm text-label-sm">More</span>
+</div>
+</nav>
+<script>
+        // Simple interactivity for demonstration
+        document.querySelectorAll('tr').forEach(row => {
+            row.addEventListener('click', () => {
+                const name = row.querySelector('.font-semibold').innerText;
+                console.log(`Opening details for: ${name}`);
+                // In a real app, this would navigate to the employee detail page
+            });
+        });
+
+        // Search highlight effect
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('ai-glow');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('ai-glow');
+        });
+    </script>
+</body></html>

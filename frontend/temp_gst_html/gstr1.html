@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>GSTR-1 Filing Wizard | FinPilot Pro</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&amp;family=Inter:wght@400;500&amp;family=Geist:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#eff4ff",
+                        "secondary-fixed-dim": "#c3c0ff",
+                        "on-tertiary-fixed-variant": "#5516be",
+                        "secondary-fixed": "#e2dfff",
+                        "primary-container": "#1a2b4b",
+                        "on-primary-container": "#8293b8",
+                        "surface-tint": "#4e5e81",
+                        "tertiary-fixed-dim": "#d0bcff",
+                        "on-tertiary-fixed": "#23005c",
+                        "inverse-surface": "#213145",
+                        "on-secondary-container": "#fffbff",
+                        "on-background": "#0b1c30",
+                        "background": "#f8f9ff",
+                        "surface": "#f8f9ff",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#645efb",
+                        "on-primary-fixed": "#081b3a",
+                        "outline-variant": "#c5c6cf",
+                        "on-secondary-fixed": "#0f0069",
+                        "surface-dim": "#cbdbf5",
+                        "inverse-on-surface": "#eaf1ff",
+                        "surface-bright": "#f8f9ff",
+                        "tertiary": "#1e0050",
+                        "primary-fixed": "#d8e2ff",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#d3e4fe",
+                        "on-surface-variant": "#44474e",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#e5eeff",
+                        "primary": "#031635",
+                        "on-secondary-fixed-variant": "#3323cc",
+                        "on-tertiary-container": "#a27bff",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#b6c6ef",
+                        "surface-container-high": "#dce9ff",
+                        "on-surface": "#0b1c30",
+                        "on-primary-fixed-variant": "#364768",
+                        "primary-fixed-dim": "#b6c6ef",
+                        "surface-container-highest": "#d3e4fe",
+                        "outline": "#75777f",
+                        "tertiary-container": "#360084",
+                        "tertiary-fixed": "#e9ddff",
+                        "secondary": "#4b41e1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "xs": "4px",
+                        "container-max": "1440px",
+                        "xl": "40px",
+                        "sm": "8px",
+                        "gutter": "20px",
+                        "base": "4px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "display-lg": ["Hanken Grotesk"],
+                        "label-sm": ["Geist"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "body-md": ["Inter"],
+                        "data-mono": ["Geist"],
+                        "headline-md": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "data-mono": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 1);
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-loader {
+            animation: rotate 2s linear infinite;
+        }
+        .ai-glow {
+            box-shadow: 0 0 15px rgba(79, 70, 229, 0.15);
+        }
+        .stepper-line::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 24px;
+            right: 24px;
+            height: 2px;
+            background: #e2e8f0;
+            z-index: 0;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen font-body-md">
+<!-- Top Navigation Header -->
+<header class="bg-surface/70 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm sticky top-0 flex justify-between items-center w-full px-gutter h-16 z-50">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary cursor-pointer active:scale-95 duration-200">close</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">GSTR-1 Filing Wizard</h1>
+</div>
+<div class="flex items-center gap-md">
+<span class="text-on-surface-variant font-label-sm text-label-sm">Filing Period: Oct 2023</span>
+<div class="h-8 w-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-xs">VM</div>
+</div>
+</header>
+<main class="max-w-[1440px] mx-auto p-gutter pb-32">
+<!-- Progress Stepper -->
+<nav class="relative flex justify-between items-center mb-xl max-w-3xl mx-auto">
+<div class="absolute top-1/2 left-0 w-full h-[2px] bg-outline-variant/30 -translate-y-1/2 -z-10"></div>
+<!-- Step 1: Active -->
+<div class="flex flex-col items-center gap-xs z-10">
+<div class="w-10 h-10 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-bold shadow-lg ring-4 ring-secondary/20">1</div>
+<span class="font-label-sm text-label-sm text-secondary">Validation</span>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col items-center gap-xs z-10">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold">2</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Review</span>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col items-center gap-xs z-10">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold">3</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Summary</span>
+</div>
+<!-- Step 4 -->
+<div class="flex flex-col items-center gap-xs z-10">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold">4</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">File</span>
+</div>
+</nav>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+<!-- Left Column: Status and Loader -->
+<div class="lg:col-span-5 flex flex-col gap-lg">
+<section class="glass-panel rounded-xl p-xl flex flex-col items-center text-center">
+<div class="relative w-48 h-48 mb-lg">
+<!-- Background Circle -->
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-high" cx="96" cy="96" fill="transparent" r="88" stroke="currentColor" stroke-width="8"></circle>
+<!-- Animated Loader Segment -->
+<circle class="text-secondary animate-loader origin-center" cx="96" cy="96" fill="transparent" r="88" stroke="currentColor" stroke-dasharray="553" stroke-dashoffset="140" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-display-lg text-display-lg text-primary">74%</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Processing</span>
+</div>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary mb-xs">Validation in Progress</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-sm">FinPilot AI is scanning 2,482 B2B invoices against GSTN master data to identify discrepancies.</p>
+<div class="mt-xl w-full flex flex-col gap-sm">
+<div class="flex justify-between items-center px-md py-sm bg-surface-container-low rounded-lg">
+<span class="text-body-md text-on-surface-variant">Total Invoices Scanned</span>
+<span class="font-data-mono text-data-mono text-primary">1,842 / 2,482</span>
+</div>
+<div class="flex justify-between items-center px-md py-sm bg-surface-container-low rounded-lg">
+<span class="text-body-md text-on-surface-variant">Estimated Time Left</span>
+<span class="font-data-mono text-data-mono text-primary">02:14 min</span>
+</div>
+</div>
+</section>
+<!-- AI Insight Card -->
+<section class="ai-glow bg-surface-container-lowest border border-secondary/20 rounded-xl p-lg">
+<div class="flex items-start gap-md">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-primary mb-xs">AI Optimization Hint</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">We noticed 45 duplicate entries in Section 4B. I can automatically merge these and adjust the taxable value to prevent over-filing.</p>
+<button class="mt-md px-md py-2 bg-secondary text-on-secondary rounded-lg font-label-sm text-label-sm transition-all hover:opacity-90 active:scale-95">Auto-Fix Duplicates</button>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Auto-Detected Errors -->
+<div class="lg:col-span-7 flex flex-col gap-lg">
+<section class="glass-panel rounded-xl overflow-hidden">
+<div class="p-lg border-b border-outline-variant/30 flex justify-between items-center bg-surface-container-high/30">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">report</span>
+<h3 class="font-headline-md text-headline-md text-primary">Auto-Detected Errors</h3>
+</div>
+<span class="bg-error-container text-on-error-container px-3 py-1 rounded-full font-label-sm text-label-sm">12 Critical Blocks</span>
+</div>
+<div class="divide-y divide-outline-variant/20">
+<!-- Error Row 1 -->
+<div class="p-lg hover:bg-surface-container-low transition-colors group">
+<div class="flex justify-between items-start mb-sm">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-error mb-xs">INVALID GSTIN</span>
+<h4 class="font-headline-md text-headline-md text-primary">Invoice #INV-2023-094</h4>
+</div>
+<button class="text-secondary hover:underline font-label-sm text-label-sm">Edit Invoice</button>
+</div>
+<div class="flex gap-lg text-body-md text-on-surface-variant mb-md">
+<div class="flex flex-col">
+<span class="text-[10px] uppercase tracking-wider opacity-60">Recipient</span>
+<span class="font-data-mono">Acme Corp South</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] uppercase tracking-wider opacity-60">Reported GSTIN</span>
+<span class="font-data-mono">29ABCDE1234F1Z5</span>
+</div>
+</div>
+<div class="p-md bg-error-container/20 border-l-4 border-error rounded-r-lg flex items-start gap-md">
+<span class="material-symbols-outlined text-error text-md mt-0.5">lightbulb</span>
+<div>
+<p class="font-body-md text-body-md text-on-error-container"><strong class="font-bold">AI Suggestion:</strong> This GSTIN was cancelled on Sep 12. Use the 'Consumer' (B2C) category or verify the updated GSTIN with the vendor.</p>
+</div>
+</div>
+</div>
+<!-- Error Row 2 -->
+<div class="p-lg hover:bg-surface-container-low transition-colors group">
+<div class="flex justify-between items-start mb-sm">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-error mb-xs">HNS CODE MISMATCH</span>
+<h4 class="font-headline-md text-headline-md text-primary">Invoice #INV-2023-112</h4>
+</div>
+<button class="text-secondary hover:underline font-label-sm text-label-sm">Edit Invoice</button>
+</div>
+<div class="flex gap-lg text-body-md text-on-surface-variant mb-md">
+<div class="flex flex-col">
+<span class="text-[10px] uppercase tracking-wider opacity-60">Item Desc</span>
+<span class="font-data-mono">Cloud Infrastructure Svc</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] uppercase tracking-wider opacity-60">HSN Code</span>
+<span class="font-data-mono">998311 (6-digit)</span>
+</div>
+</div>
+<div class="p-md bg-error-container/20 border-l-4 border-error rounded-r-lg flex items-start gap-md">
+<span class="material-symbols-outlined text-error text-md mt-0.5">lightbulb</span>
+<div>
+<p class="font-body-md text-body-md text-on-error-container"><strong class="font-bold">AI Suggestion:</strong> HSN 998311 requires 18% GST. Current entry shows 12%. Apply 18% across all 4 items in this category?</p>
+<button class="mt-sm text-secondary font-bold text-xs uppercase hover:underline">Apply 18% Globally</button>
+</div>
+</div>
+</div>
+<!-- Error Row 3 -->
+<div class="p-lg hover:bg-surface-container-low transition-colors group">
+<div class="flex justify-between items-start mb-sm">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-error mb-xs">PLACE OF SUPPLY CONFLICT</span>
+<h4 class="font-headline-md text-headline-md text-primary">Invoice #INV-2023-201</h4>
+</div>
+<button class="text-secondary hover:underline font-label-sm text-label-sm">Edit Invoice</button>
+</div>
+<div class="p-md bg-error-container/20 border-l-4 border-error rounded-r-lg flex items-start gap-md">
+<span class="material-symbols-outlined text-error text-md mt-0.5">lightbulb</span>
+<div>
+<p class="font-body-md text-body-md text-on-error-container"><strong class="font-bold">AI Suggestion:</strong> POS is marked as 'Maharashtra' but IGST is applied. If this is Inter-state, check GSTIN prefix. If Intra-state, change tax to CGST/SGST.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="p-lg bg-surface-container-highest flex justify-center">
+<button class="flex items-center gap-sm text-secondary font-label-sm text-label-sm hover:opacity-80">
+                            View 9 Other Non-Critical Warnings
+                            <span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- Bottom Action Bar -->
+<footer class="fixed bottom-0 left-0 w-full bg-surface-container-lowest border-t border-outline-variant/30 px-gutter py-md z-50 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+<div class="max-w-[1440px] mx-auto flex justify-between items-center">
+<div class="flex items-center gap-md">
+<div class="flex flex-col">
+<span class="text-[10px] uppercase font-bold text-on-surface-variant">Validation Status</span>
+<div class="flex items-center gap-sm">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-data-mono text-data-mono text-primary">Analyzing...</span>
+</div>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant/30 hidden md:block"></div>
+<div class="hidden md:flex flex-col">
+<span class="text-[10px] uppercase font-bold text-on-surface-variant">Total Liability</span>
+<span class="font-data-mono text-data-mono text-primary">₹ 14,82,904.00</span>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<button class="px-xl py-3 border border-outline text-primary rounded-lg font-bold transition-all hover:bg-surface-container active:scale-95">Save Draft</button>
+<button class="px-xl py-3 bg-primary text-on-primary rounded-lg font-bold opacity-50 cursor-not-allowed flex items-center gap-sm">
+                    Review All Data
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction for the progress circle (just for visual flair)
+        document.addEventListener('DOMContentLoaded', () => {
+            const circle = document.querySelector('.animate-loader');
+            const percentText = document.querySelector('.text-display-lg');
+            let current = 74;
+            
+            setInterval(() => {
+                if (current < 99) {
+                    current++;
+                    percentText.innerText = current + '%';
+                    const offset = 553 - (553 * current / 100);
+                    circle.style.strokeDashoffset = offset;
+                }
+            }, 3000);
+        });
+    </script>
+</body></html>

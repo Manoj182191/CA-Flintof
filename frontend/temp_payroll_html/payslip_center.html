@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FinPilot Pro | Payslip Viewer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Hanken+Grotesk:wght@600;700&family=Geist:wght@500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Hanken+Grotesk:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#eff4ff",
+                        "secondary-fixed-dim": "#c3c0ff",
+                        "on-tertiary-fixed-variant": "#5516be",
+                        "secondary-fixed": "#e2dfff",
+                        "primary-container": "#1a2b4b",
+                        "on-primary-container": "#8293b8",
+                        "surface-tint": "#4e5e81",
+                        "tertiary-fixed-dim": "#d0bcff",
+                        "on-tertiary-fixed": "#23005c",
+                        "inverse-surface": "#213145",
+                        "on-secondary-container": "#fffbff",
+                        "on-background": "#0b1c30",
+                        "background": "#f8f9ff",
+                        "surface": "#f8f9ff",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#645efb",
+                        "on-primary-fixed": "#081b3a",
+                        "outline-variant": "#c5c6cf",
+                        "on-secondary-fixed": "#0f0069",
+                        "surface-dim": "#cbdbf5",
+                        "inverse-on-surface": "#eaf1ff",
+                        "surface-bright": "#f8f9ff",
+                        "tertiary": "#1e0050",
+                        "primary-fixed": "#d8e2ff",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#d3e4fe",
+                        "on-surface-variant": "#44474e",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#e5eeff",
+                        "primary": "#031635",
+                        "on-secondary-fixed-variant": "#3323cc",
+                        "on-tertiary-container": "#a27bff",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#b6c6ef",
+                        "surface-container-high": "#dce9ff",
+                        "on-surface": "#0b1c30",
+                        "on-primary-fixed-variant": "#364768",
+                        "primary-fixed-dim": "#b6c6ef",
+                        "surface-container-highest": "#d3e4fe",
+                        "outline": "#75777f",
+                        "tertiary-container": "#360084",
+                        "tertiary-fixed": "#e9ddff",
+                        "secondary": "#4b41e1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "xs": "4px",
+                        "container-max": "1440px",
+                        "xl": "40px",
+                        "sm": "8px",
+                        "gutter": "20px",
+                        "base": "4px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Hanken Grotesk"],
+                        "display-lg": ["Hanken Grotesk"],
+                        "label-sm": ["Geist"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "body-md": ["Inter"],
+                        "data-mono": ["Geist"],
+                        "headline-md": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "data-mono": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Inter', sans-serif;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen pb-24">
+<!-- Top App Bar -->
+<header class="bg-surface/70 backdrop-blur-xl text-primary sticky top-0 z-50 border-b border-outline-variant/30 shadow-sm flex justify-between items-center w-full px-gutter h-16">
+<div class="flex items-center gap-3">
+<button class="p-2 cursor-pointer active:scale-95 duration-200 hover:bg-surface-container-high/50 rounded-full">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold">FinPilot Pro</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 cursor-pointer active:scale-95 duration-200 hover:bg-surface-container-high/50 rounded-full">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center overflow-hidden">
+<img alt="Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJoUXy0EuUAbk2NzVPBb4cDyu2obkRr0I0JcVRif2jSic2FvHB4RHggX6fTNurq6d_laL9xfGCJy2AbFi1_c5liDFPsN8vDvfMR7zSejo5RHZWdnTISMpC7C9MZSwPlLqxwxYi_tBhFJiA3pSTf6AV9raiwMRGnZBgCuwOyL2xabdpbsNxqemEcTUrFVPZmniyWXIhKEGG8JTv7LqlTKYuOS0KwwtVnv_G6GmgdZzkyFygLo-QNr1ouXGF7vtaX7hOducm5ufxaPE"/>
+</div>
+</div>
+</header>
+<main class="max-w-md mx-auto px-4 py-6 space-y-6">
+<!-- Month Selector -->
+<section class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Current Period</span>
+<div class="flex items-center gap-1 group cursor-pointer">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-primary">October 2023</h2>
+<span class="material-symbols-outlined text-primary group-active:translate-y-0.5 transition-transform">expand_more</span>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="p-2 bg-surface-container rounded-lg text-primary active:scale-90 transition-transform">
+<span class="material-symbols-outlined">mail</span>
+</button>
+<button class="p-2 bg-secondary text-on-secondary rounded-lg active:scale-90 transition-transform flex items-center gap-2">
+<span class="material-symbols-outlined">download</span>
+<span class="font-label-sm text-label-sm hidden sm:block">PDF</span>
+</button>
+</div>
+</section>
+<!-- Net Pay Hero Card -->
+<div class="relative overflow-hidden rounded-xl bg-primary p-6 text-on-primary shadow-lg">
+<div class="absolute -right-12 -top-12 w-48 h-48 bg-secondary-container/10 rounded-full blur-3xl"></div>
+<div class="flex flex-col gap-1 relative z-10">
+<p class="font-label-sm text-label-sm text-primary-fixed opacity-80">Take-home Salary</p>
+<h3 class="font-display-lg text-4xl tracking-tighter">₹1,42,850.00</h3>
+<div class="flex items-center gap-2 mt-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold">
+<span class="material-symbols-outlined text-xs mr-1">trending_up</span>+4.2%
+                    </span>
+<span class="text-xs text-primary-fixed/60">vs Last Month</span>
+</div>
+</div>
+</div>
+<!-- Breakdown Tabs -->
+<section class="space-y-4">
+<div class="flex gap-4 border-b border-outline-variant/30 overflow-x-auto hide-scrollbar">
+<button class="pb-2 border-b-2 border-secondary font-label-sm text-label-sm text-secondary px-2">Earnings</button>
+<button class="pb-2 font-label-sm text-label-sm text-on-surface-variant px-2">Deductions</button>
+<button class="pb-2 font-label-sm text-label-sm text-on-surface-variant px-2">Tax Savings</button>
+</div>
+<!-- Earnings List -->
+<div class="glass-card rounded-xl overflow-hidden p-4 space-y-4">
+<div class="flex justify-between items-center">
+<div>
+<p class="font-body-md text-body-md font-semibold text-primary">Basic Salary</p>
+<p class="text-[10px] text-on-surface-variant">Fixed Component</p>
+</div>
+<p class="font-data-mono text-data-mono text-primary">₹75,000.00</p>
+</div>
+<div class="flex justify-between items-center">
+<div>
+<p class="font-body-md text-body-md font-semibold text-primary">HRA</p>
+<p class="text-[10px] text-on-surface-variant">House Rent Allowance</p>
+</div>
+<p class="font-data-mono text-data-mono text-primary">₹30,000.00</p>
+</div>
+<div class="flex justify-between items-center">
+<div>
+<p class="font-body-md text-body-md font-semibold text-primary">Special Allowance</p>
+<p class="text-[10px] text-on-surface-variant">Taxable Benefit</p>
+</div>
+<p class="font-data-mono text-data-mono text-primary">₹45,500.00</p>
+</div>
+<div class="flex justify-between items-center">
+<div>
+<p class="font-body-md text-body-md font-semibold text-primary">LTA</p>
+<p class="text-[10px] text-on-surface-variant">Leave Travel Allowance</p>
+</div>
+<p class="font-data-mono text-data-mono text-primary">₹12,350.00</p>
+</div>
+<div class="pt-4 mt-2 border-t border-outline-variant/20 flex justify-between items-center font-bold">
+<p class="text-primary">Gross Earnings</p>
+<p class="text-primary">₹1,62,850.00</p>
+</div>
+</div>
+<!-- Deductions Summary -->
+<div class="glass-card rounded-xl p-4 bg-surface-container-low/50">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-error-container/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-error">money_off</span>
+</div>
+<div>
+<h4 class="font-label-sm text-label-sm text-primary">Total Deductions</h4>
+<p class="font-data-mono text-data-mono text-error">- ₹20,000.00</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="p-3 bg-white/50 rounded-lg border border-outline-variant/10">
+<p class="text-[10px] uppercase tracking-wider text-on-surface-variant">PF contribution</p>
+<p class="font-data-mono text-xs font-bold text-primary">₹1,800.00</p>
+</div>
+<div class="p-3 bg-white/50 rounded-lg border border-outline-variant/10">
+<p class="text-[10px] uppercase tracking-wider text-on-surface-variant">Income Tax (TDS)</p>
+<p class="font-data-mono text-xs font-bold text-primary">₹18,200.00</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Payroll History Chart -->
+<section class="space-y-4">
+<h3 class="font-headline-md text-headline-md text-primary">Payroll History</h3>
+<div class="glass-card rounded-xl p-6 h-48 flex items-end justify-between relative overflow-hidden">
+<!-- Simple bar representation -->
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-8 bg-primary/20 rounded-t-lg h-24 group-hover:bg-secondary/40 transition-colors"></div>
+<span class="text-[10px] font-bold text-on-surface-variant">MAY</span>
+</div>
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-8 bg-primary/20 rounded-t-lg h-28 group-hover:bg-secondary/40 transition-colors"></div>
+<span class="text-[10px] font-bold text-on-surface-variant">JUN</span>
+</div>
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-8 bg-primary/20 rounded-t-lg h-32 group-hover:bg-secondary/40 transition-colors"></div>
+<span class="text-[10px] font-bold text-on-surface-variant">JUL</span>
+</div>
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-8 bg-primary/20 rounded-t-lg h-30 group-hover:bg-secondary/40 transition-colors"></div>
+<span class="text-[10px] font-bold text-on-surface-variant">AUG</span>
+</div>
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-8 bg-primary/20 rounded-t-lg h-31 group-hover:bg-secondary/40 transition-colors"></div>
+<span class="text-[10px] font-bold text-on-surface-variant">SEP</span>
+</div>
+<div class="flex flex-col items-center gap-2 group cursor-pointer">
+<div class="w-8 bg-secondary rounded-t-lg h-40 shadow-lg shadow-secondary/20"></div>
+<span class="text-[10px] font-bold text-secondary">OCT</span>
+</div>
+<!-- Subtle Grid Line -->
+<div class="absolute left-0 bottom-12 w-full h-px bg-outline-variant/10 -z-10"></div>
+</div>
+</section>
+<!-- Compliance & HR Footer Info -->
+<div class="flex items-center justify-between p-4 bg-surface-container-highest/30 rounded-xl border border-outline-variant/20">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-emerald-600 text-sm" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="font-label-sm text-label-sm text-primary">Certified by FinPilot Core</span>
+</div>
+<button class="text-secondary text-[10px] font-bold flex items-center">
+                REPORT ERROR
+                <span class="material-symbols-outlined text-xs ml-1">arrow_forward</span>
+</button>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center py-2 px-4 bg-surface border-t border-outline-variant/20 shadow-lg z-50">
+<div class="flex flex-col items-center justify-center text-on-surface-variant cursor-pointer active:scale-90 transition-transform">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-[10px]">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 cursor-pointer active:scale-90 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<span class="font-label-sm text-[10px]">Ledgers</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant cursor-pointer active:scale-90 transition-transform">
+<span class="material-symbols-outlined">verified_user</span>
+<span class="font-label-sm text-[10px]">Compliance</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant cursor-pointer active:scale-90 transition-transform">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-label-sm text-[10px]">HR</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant cursor-pointer active:scale-90 transition-transform">
+<span class="material-symbols-outlined">more_horiz</span>
+<span class="font-label-sm text-[10px]">More</span>
+</div>
+</nav>
+<!-- Interaction Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Micro-interactions for buttons
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const originalColor = btn.style.backgroundColor;
+                    btn.style.opacity = '0.7';
+                    setTimeout(() => {
+                        btn.style.opacity = '1';
+                    }, 100);
+                });
+            });
+
+            // Tab Switcher Simulation
+            const tabButtons = document.querySelectorAll('.space-y-4 .flex.gap-4 button');
+            tabButtons.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabButtons.forEach(t => {
+                        t.classList.remove('border-b-2', 'border-secondary', 'text-secondary');
+                        t.classList.add('text-on-surface-variant');
+                    });
+                    tab.classList.add('border-b-2', 'border-secondary', 'text-secondary');
+                    tab.classList.remove('text-on-surface-variant');
+                });
+            });
+        });
+    </script>
+</body></html>

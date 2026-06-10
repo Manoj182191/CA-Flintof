@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FinPilot Pro | GSTR-3B Filing Wizard</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;family=Geist:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-low": "#eff4ff",
+                    "secondary-fixed-dim": "#c3c0ff",
+                    "on-tertiary-fixed-variant": "#5516be",
+                    "secondary-fixed": "#e2dfff",
+                    "primary-container": "#1a2b4b",
+                    "on-primary-container": "#8293b8",
+                    "surface-tint": "#4e5e81",
+                    "tertiary-fixed-dim": "#d0bcff",
+                    "on-tertiary-fixed": "#23005c",
+                    "inverse-surface": "#213145",
+                    "on-secondary-container": "#fffbff",
+                    "on-background": "#0b1c30",
+                    "background": "#f8f9ff",
+                    "surface": "#f8f9ff",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "secondary-container": "#645efb",
+                    "on-primary-fixed": "#081b3a",
+                    "outline-variant": "#c5c6cf",
+                    "on-secondary-fixed": "#0f0069",
+                    "surface-dim": "#cbdbf5",
+                    "inverse-on-surface": "#eaf1ff",
+                    "surface-bright": "#f8f9ff",
+                    "tertiary": "#1e0050",
+                    "primary-fixed": "#d8e2ff",
+                    "error": "#ba1a1a",
+                    "on-error": "#ffffff",
+                    "surface-variant": "#d3e4fe",
+                    "on-surface-variant": "#44474e",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container": "#e5eeff",
+                    "primary": "#031635",
+                    "on-secondary-fixed-variant": "#3323cc",
+                    "on-tertiary-container": "#a27bff",
+                    "on-error-container": "#93000a",
+                    "inverse-primary": "#b6c6ef",
+                    "surface-container-high": "#dce9ff",
+                    "on-surface": "#0b1c30",
+                    "on-primary-fixed-variant": "#364768",
+                    "primary-fixed-dim": "#b6c6ef",
+                    "surface-container-highest": "#d3e4fe",
+                    "outline": "#75777f",
+                    "tertiary-container": "#360084",
+                    "tertiary-fixed": "#e9ddff",
+                    "secondary": "#4b41e1"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "md": "16px",
+                    "xs": "4px",
+                    "container-max": "1440px",
+                    "xl": "40px",
+                    "sm": "8px",
+                    "gutter": "20px",
+                    "base": "4px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "display-lg": ["Hanken Grotesk"],
+                    "label-sm": ["Geist"],
+                    "body-lg": ["Inter"],
+                    "headline-lg": ["Hanken Grotesk"],
+                    "body-md": ["Inter"],
+                    "data-mono": ["Geist"],
+                    "headline-md": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "data-mono": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .glass { backdrop-filter: blur(12px); }
+      .ai-glow { box-shadow: 0 0 15px rgba(79, 70, 229, 0.15); }
+      .compact-table td, .compact-table th { padding: 8px 12px; }
+      .scroll-hide::-webkit-scrollbar { display: none; }
+      .scroll-hide { -ms-overflow-style: none; scrollbar-width: none; }
+      .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md min-h-screen">
+<!-- TopAppBar -->
+<header class="bg-surface/70 backdrop-blur-xl z-50 sticky top-0 border-b border-outline-variant/30 shadow-sm flex justify-between items-center w-full px-gutter h-16">
+<div class="flex items-center gap-4">
+<button class="text-primary cursor-pointer active:scale-95 duration-200">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">FinPilot Pro</h1>
+</div>
+<div class="flex items-center gap-gutter">
+<nav class="hidden md:flex gap-md">
+<span class="text-primary font-bold cursor-pointer transition-colors hover:text-secondary">Compliance</span>
+<span class="text-on-surface-variant cursor-pointer transition-colors hover:text-secondary">Ledgers</span>
+<span class="text-on-surface-variant cursor-pointer transition-colors hover:text-secondary">Audit</span>
+</nav>
+<div class="h-10 w-10 rounded-full overflow-hidden border-2 border-primary/10 shadow-sm">
+<img alt="User" data-alt="A professional high-resolution headshot profile icon for a senior financial partner. The background is a soft, out-of-focus modern corporate office with cool blue and grey tones. The subject is wearing a tailored charcoal suit, conveying authority and precision. The lighting is soft and directional, typical of a high-end business photography session." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzuJ8_XbWM3RlJtyjd1oxsRDk2h2yOkZaiFysyNiptHHJZrFjsyDSYdhnZSb1GuN0BZNJWs2uA3hY2YmPazgwKx7U-OSPEEZSVQpAKml1SuqJmvq1xhu8WHGDHqrUEKroTwjnf7IAHXy_wbXKaSTv_QB6iFM3qnHCqiFUELsJfXA5RiKfHmJJPuzd3HlH_oTpNM6VsjIz1iUq8o3tVTaKVixAxj-Iu9V1Re9So1M5aL6FqN00LQ_l8Wf3qphBbaXRUkNkJHDWzUyo"/>
+</div>
+</div>
+</header>
+<main class="max-w-[1440px] mx-auto flex flex-col md:flex-row pb-24 md:pb-0">
+<!-- NavigationDrawer (Sidebar) -->
+<aside class="hidden md:flex flex-col w-[280px] h-[calc(100vh-64px)] p-md bg-surface-container-lowest border-r border-outline-variant/20 sticky top-16">
+<div class="flex items-center gap-3 p-2 mb-lg bg-surface-container-low rounded-xl">
+<div class="w-12 h-12 rounded-lg bg-primary flex items-center justify-center text-white font-bold">CA</div>
+<div>
+<p class="font-body-md font-bold text-primary">CA Vikram Mehta</p>
+<p class="text-xs text-on-surface-variant">Senior Partner</p>
+</div>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">fact_check</span>
+<span class="font-body-md">Audit</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-body-md">TDS</span>
+</a>
+<a class="flex items-center gap-3 p-3 bg-secondary-container text-on-secondary-container rounded-lg font-bold" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-body-md">GST</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined">business</span>
+<span class="font-body-md">ROC</span>
+</a>
+</nav>
+<div class="mt-auto p-4 bg-primary/5 rounded-xl border border-primary/10">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-bold text-primary tracking-wider">AI ASSISTANT</span>
+<div class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></div>
+</div>
+<p class="text-xs text-on-surface-variant leading-relaxed">System ready for GSTR-3B validation for FY 2023-24.</p>
+</div>
+</aside>
+<!-- Content Canvas -->
+<section class="flex-1 p-gutter md:p-xl space-y-lg overflow-x-hidden">
+<!-- Wizard Stepper (SCREEN_122 Inspiration) -->
+<div class="w-full flex items-center justify-between mb-lg relative">
+<div class="absolute top-1/2 left-0 w-full h-[2px] bg-outline-variant/30 -z-10 -translate-y-1/2"></div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold ring-4 ring-background">1</div>
+<span class="text-xs font-bold text-primary">Liability &amp; ITC</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold ring-4 ring-background">2</div>
+<span class="text-xs text-on-surface-variant">System Offset</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold ring-4 ring-background">3</div>
+<span class="text-xs text-on-surface-variant">Payment</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center font-bold ring-4 ring-background">4</div>
+<span class="text-xs text-on-surface-variant">File Return</span>
+</div>
+</div>
+<!-- Page Header with AI Review Badge -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary">Liability &amp; ITC Summary</h2>
+<p class="text-on-surface-variant">Review auto-populated data from GSTR-1 and GSTR-2B before filing.</p>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200 text-xs font-bold ai-glow">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+                    AI REVIEW: 99.8% ACCURACY
+                </div>
+</div>
+<!-- High-Density Summary Cards (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<!-- Total Tax Liability -->
+<div class="bg-surface-container-lowest border border-outline-variant/20 p-lg rounded-xl shadow-sm hover:shadow-md transition-all">
+<div class="flex justify-between items-start mb-md">
+<span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Total Tax Liability</span>
+<div class="p-2 bg-primary/5 text-primary rounded-lg">
+<span class="material-symbols-outlined">trending_up</span>
+</div>
+</div>
+<p class="font-data-mono text-headline-lg text-primary">₹ 14,85,200.00</p>
+<div class="mt-4 flex items-center gap-2">
+<span class="text-xs text-on-surface-variant">Sourced from GSTR-1</span>
+<span class="h-1 w-1 rounded-full bg-outline-variant"></span>
+<span class="text-xs text-emerald-600 font-bold">Validated</span>
+</div>
+</div>
+<!-- Eligible ITC -->
+<div class="bg-surface-container-lowest border border-outline-variant/20 p-lg rounded-xl shadow-sm hover:shadow-md transition-all">
+<div class="flex justify-between items-start mb-md">
+<span class="text-xs font-bold text-on-surface-variant uppercase tracking-widest">Eligible ITC</span>
+<div class="p-2 bg-secondary/5 text-secondary rounded-lg">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</div>
+</div>
+<p class="font-data-mono text-headline-lg text-secondary">₹ 11,20,450.00</p>
+<div class="mt-4 flex items-center gap-2">
+<span class="text-xs text-on-surface-variant">Sourced from GSTR-2B</span>
+<span class="h-1 w-1 rounded-full bg-outline-variant"></span>
+<span class="text-xs text-secondary font-bold">Optimized</span>
+</div>
+</div>
+<!-- Net Tax Payable -->
+<div class="bg-primary text-white p-lg rounded-xl shadow-lg relative overflow-hidden group">
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-md">
+<span class="text-xs font-bold text-primary-fixed uppercase tracking-widest">Net Tax Payable</span>
+<div class="p-2 bg-white/10 text-white rounded-lg">
+<span class="material-symbols-outlined">payments</span>
+</div>
+</div>
+<p class="font-data-mono text-headline-lg">₹ 3,64,750.00</p>
+<div class="mt-4 flex items-center gap-2">
+<span class="text-xs text-primary-fixed">Cash Ledger Req.</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</div>
+</div>
+<!-- Decorative element for "high-end UI" -->
+<div class="absolute -right-4 -bottom-4 w-24 h-24 bg-white/5 rounded-full blur-2xl group-hover:bg-white/10 transition-all"></div>
+</div>
+</div>
+<!-- Expandable Detailed Sections -->
+<div class="space-y-md">
+<h3 class="font-headline-md text-primary mt-lg">Detailed Table Breakdown</h3>
+<!-- Table 3.1: Tax on Outward Supplies -->
+<div class="bg-surface-container-lowest border border-outline-variant/20 rounded-xl overflow-hidden">
+<button class="w-full flex items-center justify-between p-md hover:bg-surface-container transition-colors" onclick="toggleSection('table-31')">
+<div class="flex items-center gap-4">
+<span class="text-xs font-bold bg-primary/10 text-primary px-2 py-1 rounded">3.1</span>
+<span class="font-bold text-on-surface">Details of Outward Supplies &amp; Inward Supplies liable to reverse charge</span>
+</div>
+<span class="material-symbols-outlined transition-transform" id="icon-table-31">expand_more</span>
+</button>
+<div class="hidden border-t border-outline-variant/10 overflow-x-auto" id="table-31">
+<table class="w-full text-left compact-table font-body-md">
+<thead class="bg-surface-container-low text-on-surface-variant text-xs uppercase tracking-wider">
+<tr>
+<th class="font-bold">Nature of Supplies</th>
+<th class="font-bold text-right">Taxable Value</th>
+<th class="font-bold text-right">IGST</th>
+<th class="font-bold text-right">CGST</th>
+<th class="font-bold text-right">SGST/UTGST</th>
+<th class="font-bold text-right">Cess</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10 text-sm">
+<tr>
+<td>(a) Outward taxable supplies</td>
+<td class="text-right font-data-mono">₹ 75,00,000</td>
+<td class="text-right font-data-mono">₹ 13,50,000</td>
+<td class="text-right font-data-mono">₹ 0</td>
+<td class="text-right font-data-mono">₹ 0</td>
+<td class="text-right font-data-mono">₹ 0</td>
+</tr>
+<tr>
+<td>(b) Outward taxable supplies (zero rated)</td>
+<td class="text-right font-data-mono">₹ 5,00,000</td>
+<td class="text-right font-data-mono">₹ 0</td>
+<td class="text-right font-data-mono">₹ 0</td>
+<td class="text-right font-data-mono">₹ 0</td>
+<td class="text-right font-data-mono">₹ 0</td>
+</tr>
+<tr class="bg-primary/5">
+<td class="font-bold">Total</td>
+<td class="text-right font-bold font-data-mono">₹ 80,00,000</td>
+<td class="text-right font-bold font-data-mono text-primary">₹ 13,50,000</td>
+<td class="text-right font-bold font-data-mono">₹ 0</td>
+<td class="text-right font-bold font-data-mono">₹ 0</td>
+<td class="text-right font-bold font-data-mono">₹ 0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Table 4: Eligible ITC -->
+<div class="bg-surface-container-lowest border border-outline-variant/20 rounded-xl overflow-hidden">
+<button class="w-full flex items-center justify-between p-md hover:bg-surface-container transition-colors" onclick="toggleSection('table-4')">
+<div class="flex items-center gap-4">
+<span class="text-xs font-bold bg-secondary/10 text-secondary px-2 py-1 rounded">4.0</span>
+<span class="font-bold text-on-surface">Details of Eligible Input Tax Credit (ITC)</span>
+</div>
+<span class="material-symbols-outlined transition-transform" id="icon-table-4">expand_more</span>
+</button>
+<div class="hidden border-t border-outline-variant/10 overflow-x-auto" id="table-4">
+<table class="w-full text-left compact-table font-body-md">
+<thead class="bg-surface-container-low text-on-surface-variant text-xs uppercase tracking-wider">
+<tr>
+<th class="font-bold">Details</th>
+<th class="font-bold text-right">IGST</th>
+<th class="font-bold text-right">CGST</th>
+<th class="font-bold text-right">SGST/UTGST</th>
+<th class="font-bold text-right">Cess</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10 text-sm">
+<tr>
+<td>(A) ITC Available (Import of goods)</td>
+<td class="text-right font-data-mono">₹ 2,40,000</td>
+<td class="text-right font-data-mono">₹ 0</td>
+<td class="text-right font-data-mono">₹ 0</td>
+<td class="text-right font-data-mono">₹ 0</td>
+</tr>
+<tr>
+<td>(B) ITC Available (All other ITC)</td>
+<td class="text-right font-data-mono">₹ 8,80,450</td>
+<td class="text-right font-data-mono">₹ 0</td>
+<td class="text-right font-data-mono">₹ 0</td>
+<td class="text-right font-data-mono">₹ 0</td>
+</tr>
+<tr class="bg-secondary/5">
+<td class="font-bold">Total Eligible ITC</td>
+<td class="text-right font-bold font-data-mono text-secondary">₹ 11,20,450</td>
+<td class="text-right font-bold font-data-mono">₹ 0</td>
+<td class="text-right font-bold font-data-mono">₹ 0</td>
+<td class="text-right font-bold font-data-mono">₹ 0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Action Bar -->
+<div class="flex flex-col sm:flex-row justify-between items-center gap-4 bg-surface-container/30 p-md rounded-xl border border-outline-variant/20 mt-xl">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-primary">info</span>
+<span class="text-xs">Next Step: System will calculate optimal ITC utilization to minimize cash payout.</span>
+</div>
+<div class="flex gap-md w-full sm:w-auto">
+<button class="flex-1 sm:flex-none px-gutter py-3 rounded-lg border border-outline font-bold hover:bg-surface-container transition-all">Save Draft</button>
+<button class="flex-1 sm:flex-none px-gutter py-3 rounded-lg bg-primary text-white font-bold hover:bg-primary/90 transition-all shadow-md active:scale-95">Proceed to Offset</button>
+</div>
+</div>
+</section>
+<!-- Right Side AI Insights Panel (Floating-style) -->
+<aside class="hidden xl:block w-[320px] p-md bg-surface-container-lowest border-l border-outline-variant/20 h-[calc(100vh-64px)] sticky top-16 overflow-y-auto scroll-hide">
+<h4 class="font-bold text-primary mb-md flex items-center gap-2">
+<span class="material-symbols-outlined">analytics</span>
+                AI Insights
+            </h4>
+<div class="space-y-md">
+<!-- Suggestion 1 -->
+<div class="p-md rounded-xl border border-primary/10 bg-primary/5 hover:bg-primary/10 transition-colors cursor-pointer">
+<p class="text-xs font-bold text-primary mb-1">ITC Optimization</p>
+<p class="text-sm text-on-surface-variant">We found ₹ 4,200 of missing ITC in GSTR-2B which is now eligible based on previous period reconciliations.</p>
+<button class="mt-2 text-xs font-bold text-secondary underline underline-offset-4">Review Reconciliation</button>
+</div>
+<!-- Suggestion 2 -->
+<div class="p-md rounded-xl border border-error/10 bg-error/5">
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-error text-sm">warning</span>
+<p class="text-xs font-bold text-error">Potential Variance</p>
+</div>
+<p class="text-sm text-on-surface-variant">IGST liability is 5% higher than previous 3-month average. Verify if new interstate contracts were signed.</p>
+</div>
+<!-- Data Visual -->
+<div class="p-md rounded-xl border border-outline-variant/20 bg-surface">
+<p class="text-xs font-bold text-on-surface-variant mb-4">Liability Composition</p>
+<div class="flex h-4 rounded-full overflow-hidden mb-2">
+<div class="bg-primary w-[70%]" title="IGST"></div>
+<div class="bg-secondary w-[20%]" title="CGST"></div>
+<div class="bg-tertiary-container w-[10%]" title="SGST"></div>
+</div>
+<div class="flex justify-between text-[10px] font-bold text-on-surface-variant">
+<span>IGST 70%</span>
+<span>CGST 20%</span>
+<span>SGST 10%</span>
+</div>
+</div>
+</div>
+</aside>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center py-2 px-4 bg-surface border-t border-outline-variant/20 z-50">
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="text-[10px] font-label-sm">Ledgers</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1" href="#">
+<span class="material-symbols-outlined">verified_user</span>
+<span class="text-[10px] font-label-sm">Compliance</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-[10px] font-label-sm">HR</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">more_horiz</span>
+<span class="text-[10px] font-label-sm">More</span>
+</a>
+</nav>
+<script>
+        function toggleSection(id) {
+            const section = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            
+            if (section.classList.contains('hidden')) {
+                section.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                section.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Initialize with first section open
+        window.onload = () => {
+            toggleSection('table-31');
+        };
+    </script>
+</body></html>

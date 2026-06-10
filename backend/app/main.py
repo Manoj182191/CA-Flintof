@@ -113,7 +113,7 @@ async def root():
 from app.api.routes import (
     accounting, audit, auth, business_intelligence, ca_practice,
     companies, enterprise, gst, income_tax, invoicing, payroll,
-    client_portal, documents,
+    client_portal, documents, inventory
 )
 
 app.include_router(auth.router)
@@ -129,6 +129,7 @@ app.include_router(business_intelligence.router)
 app.include_router(enterprise.router)
 app.include_router(client_portal.router)
 app.include_router(documents.router)
+app.include_router(inventory.router)
 
 
 # ============== AI Routes ==============
@@ -509,203 +510,7 @@ def pay_payroll_route(
 app.include_router(payroll_extra)
 
 
-# ============== Inventory Routes ==============
 
-from fastapi import Header
-
-inv_extra = APIRouter(prefix="/api/inventory", tags=["inventory"])
-
-class WarehouseCreate(BaseModel):
-    name: str
-    code: str
-
-@inv_extra.post("/warehouses")
-def create_warehouse(
-    payload: WarehouseCreate, 
-    x_company_id: Optional[int] = Header(None, alias="X-Company-ID"),
-    user=Depends(get_current_user), 
-    db: Session = Depends(get_db)
-):
-    from app.models.models import Warehouse
-    from app.core.deps import get_active_company_id
-    get_active_company_id(user, db, x_company_id)
-    w = Warehouse(**payload.model_dump(), company_id=x_company_id)
-    db.add(w)
-    db.commit()
-    db.refresh(w)
-    return w
-
-class CategoryCreate(BaseModel):
-    name: str
-    description: Optional[str] = None
-
-@inv_extra.post("/categories")
-def create_category(
-    payload: CategoryCreate, 
-    x_company_id: Optional[int] = Header(None, alias="X-Company-ID"),
-    user=Depends(get_current_user), 
-    db: Session = Depends(get_db)
-):
-    from app.models.models import StockCategory
-    from app.core.deps import get_active_company_id
-    get_active_company_id(user, db, x_company_id)
-    c = StockCategory(**payload.model_dump(), company_id=x_company_id)
-    db.add(c)
-    db.commit()
-    db.refresh(c)
-    return {"id": c.id, "name": c.name}
-
-class ItemCreate(BaseModel):
-    company_id: int
-    item_code: str
-    item_name: str
-    description: Optional[str] = None
-    unit: Optional[str] = None
-    purchase_price: Optional[float] = None
-    selling_price: Optional[float] = None
-    hsn_code: Optional[str] = None
-    gst_rate: float = 0
-    reorder_level: float = 0
-
-
-@inv_extra.post("/items")
-def create_item(
-    payload: ItemCreate, user=Depends(get_current_user), db: Session = Depends(get_db),
-):
-    from app.models.models import StockItem
-    from app.core.deps import get_active_company_id
-    get_active_company_id(user, db, payload.company_id)  # Verify access
-    item = StockItem(**payload.model_dump())
-    db.add(item)
-    db.commit()
-    db.refresh(item)
-    return item
-
-
-@inv_extra.get("/items/{company_id}")
-def list_items(
-    company_id: int, user=Depends(get_current_user), db: Session = Depends(get_db),
-):
-    from app.models.models import StockItem
-    return db.query(StockItem).filter(StockItem.company_id == company_id).all()
-
-
-@inv_extra.get("/summary/{company_id}")
-def inv_summary(
-    company_id: int, user=Depends(get_current_user), db: Session = Depends(get_db),
-):
-    from app.services.inventory_service import stock_summary
-    return stock_summary(db, company_id)
-
-
-@inv_extra.get("/movements/{company_id}")
-def movements(
-    company_id: int, from_date: date, to_date: date, stock_item_id: int = None,
-    user=Depends(get_current_user), db: Session = Depends(get_db),
-):
-    from app.services.inventory_service import stock_movement_report
-    return stock_movement_report(db, company_id, from_date, to_date, stock_item_id)
-
-
-class POItemCreate(BaseModel):
-    stock_item_id: int
-    quantity: float
-    unit_price: float
-    gst_rate: float = 0
-
-
-class POCreate(BaseModel):
-    company_id: int
-    vendor_id: int
-    po_date: date
-    expected_delivery: Optional[date] = None
-    warehouse_id: Optional[int] = None
-    notes: str = ""
-    items: List[POItemCreate]
-
-
-@inv_extra.post("/purchase-orders")
-def create_po(
-    payload: POCreate, user=Depends(get_current_user), db: Session = Depends(get_db),
-):
-    from app.services.inventory_service import create_purchase_order
-    from app.core.deps import get_active_company_id
-    get_active_company_id(user, db, payload.company_id)  # Verify access
-    items_dicts = [item.model_dump() for item in payload.items]
-    return create_purchase_order(
-        db, payload.company_id, payload.vendor_id, payload.po_date,
-        items_dicts, payload.expected_delivery, payload.warehouse_id, payload.notes,
-    )
-
-
-class GRNItemCreate(BaseModel):
-    stock_item_id: int
-    quantity: float
-    unit_price: float
-    gst_rate: float = 0
-    batch_number: Optional[str] = None
-    expiry_date: Optional[date] = None
-
-
-class GRNCreate(BaseModel):
-    company_id: int
-    vendor_id: int
-    grn_date: date
-    purchase_order_id: Optional[int] = None
-    warehouse_id: Optional[int] = None
-    invoice_number: Optional[str] = None
-    invoice_date: Optional[date] = None
-    notes: str = ""
-    items: List[GRNItemCreate]
-
-
-@inv_extra.post("/grn")
-def create_grn_route(
-    payload: GRNCreate, user=Depends(get_current_user), db: Session = Depends(get_db),
-):
-    from app.services.inventory_service import create_grn
-    from app.core.deps import get_active_company_id
-    get_active_company_id(user, db, payload.company_id)  # Verify access
-    items_dicts = [item.model_dump() for item in payload.items]
-    return create_grn(
-        db, payload.company_id, payload.vendor_id, payload.grn_date,
-        items_dicts, payload.purchase_order_id, payload.warehouse_id,
-        payload.invoice_number, payload.invoice_date, payload.notes,
-    )
-
-
-class SOItemCreate(BaseModel):
-    stock_item_id: int
-    quantity: float
-    unit_price: float
-    gst_rate: float = 0
-
-
-class SOCreate(BaseModel):
-    company_id: int
-    customer_id: int
-    so_date: date
-    expected_delivery: Optional[date] = None
-    warehouse_id: Optional[int] = None
-    notes: str = ""
-    items: List[SOItemCreate]
-
-
-@inv_extra.post("/sales-orders")
-def create_so_route(
-    payload: SOCreate, user=Depends(get_current_user), db: Session = Depends(get_db),
-):
-    from app.services.inventory_service import create_sales_order
-    from app.core.deps import get_active_company_id
-    get_active_company_id(user, db, payload.company_id)  # Verify access
-    items_dicts = [item.model_dump() for item in payload.items]
-    return create_sales_order(
-        db, payload.company_id, payload.customer_id, payload.so_date,
-        items_dicts, payload.expected_delivery, payload.warehouse_id, payload.notes,
-    )
-
-
-app.include_router(inv_extra)
 
 
 # ============== WhatsApp & Voice Routes ==============

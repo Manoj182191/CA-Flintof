@@ -43,6 +43,16 @@ class AuthService {
     return response.data;
   }
 
+  async setup2fa(): Promise<{ secret: string; provisioning_uri: string }> {
+    const response = await apiClient.post('/auth/2fa/setup');
+    return response.data;
+  }
+
+  async verify2fa(token: string): Promise<any> {
+    const response = await apiClient.post('/auth/2fa/verify', { token });
+    return response.data;
+  }
+
   logout(): void {
     localStorage.removeItem('access_token');
     localStorage.removeItem('user');
