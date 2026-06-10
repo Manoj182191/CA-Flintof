@@ -1,0 +1,79 @@
+﻿python.exe : 
+At C:\Users\dell\Desktop\CA MY PERSONAL APP\ca-erp\backend\run_audit3.ps1:2 char:1
++ & 'C:\Users\dell\AppData\Local\Programs\Python\Python312\python.exe'  ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[notice] A new release of pip is available: 25.0.1 -> 26.1.2
+[notice] To update, run: C:\Users\dell\AppData\Local\Programs\Python\Python312\python.exe -m pip install --upgrade pip
+
+============================================================
+CA ERP Backend Startup Audit
+============================================================
+
+[1] Testing app.models import...
+  OK: 104 model classes registered
+
+[2] Testing app.core.security import...
+  OK: security module loaded; functions: hash_password, verify_password, generate_totp_secret, verify_totp
+
+[3] Testing app.core.deps import...
+  OK: deps module loaded
+
+[4] Testing all service modules...
+  OK: accounting_service
+  OK: accounting_reports
+  OK: gst_service
+  OK: tds_service
+  OK: payroll_service
+  OK: inventory_service
+  OK: ai_service
+  OK: audit_service
+  OK: government_service
+  OK: whatsapp_voice_service
+  OK: saas_service
+
+[5] Testing all route modules...
+  OK: auth
+  OK: companies
+  OK: accounting
+  OK: invoicing
+  OK: gst
+  OK: payroll
+  OK: income_tax
+  OK: audit
+  OK: ca_practice
+  OK: business_intelligence
+  OK: enterprise
+
+[6] Testing app.main import (full app)...
+  OK: app loaded; 259 routes registered
+  Sample routes:
+    HEAD,GET   /openapi.json
+    HEAD,GET   /api/docs
+    HEAD,GET   /docs/oauth2-redirect
+    HEAD,GET   /api/redoc
+    GET        /health
+    GET        /
+    POST       /api/auth/register
+    POST       /api/auth/login
+    POST       /api/auth/refresh
+    POST       /api/auth/logout
+    GET        /api/auth/me
+    POST       /api/auth/password/reset-request
+    POST       /api/auth/password/reset-confirm
+    POST       /api/auth/password/change
+    POST       /api/auth/2fa/setup
+    POST       /api/auth/2fa/enable
+    POST       /api/auth/2fa/disable
+    POST       /api/auth/2fa/verify-login
+    GET        /api/auth/sessions
+    DELETE     /api/auth/sessions/{session_id}
+
+============================================================
+AUDIT SUMMARY
+============================================================
+
+[OK] No import errors. Backend should start successfully.
+
